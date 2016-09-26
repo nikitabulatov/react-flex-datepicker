@@ -13,7 +13,6 @@ module.exports = React.createFactory(React.createClass(
     cssModifier: React.PropTypes.string
     dayChildrenFunc: React.PropTypes.func
     dayCssClassFunc: React.PropTypes.func
-    onChange: React.PropTypes.func
     onSelect: React.PropTypes.func
     onDraw: React.PropTypes.func
     i18n: React.PropTypes.object

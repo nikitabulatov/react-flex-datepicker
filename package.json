@@ -1,13 +1,30 @@
 {
-  "name": "datepicker",
+  "name": "react-flex-datepicker",
   "version": "0.0.1",
-  "description": "React datepicker",
-  "main": "index.js",
-  "scripts": {
-    "start": "node_modules/.bin/webpack-dev-server --progress --colors"
+  "description": "Flexible React DatePicker",
+  "homepage": "https://github.com/nikitabulatov/react-flex-datepicker",
+  "author": "nikitabulatov <bulatov.n.o@gmail.com>",
+  "license": "MIT",
+  "main": "dist/datepicker.min.js",
+  "style": "dist/datepicker.min.css",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/nikitabulatov/react-flex-datepicker.git"
   },
+  "bugs": {
+    "url": "https://github.com/nikitabulatov/react-flex-datepicker/issues"
+  },
+  "scripts": {
+    "start": "node_modules/.bin/webpack-dev-server --progress --colors",
+    "build": "NODE_ENV=production node_modules/.bin/webpack -p"
+  },
+  "files": [
+    "dist",
+    "*.md",
+    "src"
+  ],
   "dependencies": {
-    "classnames": "^2.2.5",
+    "classnames": "^2.2.5"
   },
   "peerDependencies": {
     "react": "^15.3.2",
@@ -24,13 +41,13 @@
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
     "webpack": "^1.13.2",
-    "webpack-dev-server": "^1.16.1",
+    "webpack-dev-server": "^1.16.1"
   },
   "keywords": [
     "react",
+    "calendar",
+    "date",
     "datepicker",
     "aviasales"
-  ],
-  "author": "Nikita Bulatov <bulatov.n.o@gmail.com>",
-  "license": "MIT"
+  ]
 }

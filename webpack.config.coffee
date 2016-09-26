@@ -4,6 +4,18 @@ CopyWebpackPlugin = require('copy-webpack-plugin')
 
 prod = if 'production' == process.env.NODE_ENV then true else false
 
+path = if prod then 'dist/' else 'build/'
+min = if prod then '.min' else ''
+
+plugins = [new ExtractTextPlugin("css/datepicker#{min}.css")]
+if prod
+  plugins = plugins.concat([
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.UglifyJsPlugin(minimize: true,  compress: warnings: false)
+  ])
+else
+  plugins = plugins.concat([new CopyWebpackPlugin([context: 'src/', from: '*.html'])])
+
 module.exports = {
   devtool: if prod then '' else 'eval-cheap-module-source-map'
   entry:
@@ -12,8 +24,8 @@ module.exports = {
     root: ['src']
     extensions: ['', '.js', '.coffee']
   output:
-    path: 'build',
-    filename: '[name].bundle.js',
+    path: path,
+    filename: "datepicker#{min}.js",
     publicPath: '/'
   module:
     loaders: [
@@ -29,8 +41,5 @@ module.exports = {
         )
       }
     ]
-  plugins: [
-    new ExtractTextPlugin('css/[name].css')
-    new CopyWebpackPlugin([context: 'src/', from: '*.html'])
-  ]
+  plugins
 }
