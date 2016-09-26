@@ -1,0 +1,13 @@
+.avs-datepicker {
+  &__days {
+    display: flex;
+    flex-flow: row wrap;
+  }
+
+  &__day {
+    background-color: azure;
+    flex-basis: 14%;
+    padding: 30px 0;
+    text-align: center;
+  }
+}

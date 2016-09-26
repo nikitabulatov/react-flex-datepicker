@@ -1,0 +1,36 @@
+{
+  "name": "datepicker",
+  "version": "0.0.1",
+  "description": "React datepicker",
+  "main": "index.js",
+  "scripts": {
+    "start": "node_modules/.bin/webpack-dev-server --progress --colors"
+  },
+  "dependencies": {
+    "classnames": "^2.2.5",
+  },
+  "peerDependencies": {
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2"
+  },
+  "devDependencies": {
+    "coffee-loader": "^0.7.2",
+    "coffee-script": "^1.11.0",
+    "copy-webpack-plugin": "^3.0.1",
+    "css-loader": "^0.25.0",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "node-sass": "^3.10.0",
+    "sass-loader": "^4.0.2",
+    "style-loader": "^0.13.1",
+    "url-loader": "^0.5.7",
+    "webpack": "^1.13.2",
+    "webpack-dev-server": "^1.16.1",
+  },
+  "keywords": [
+    "react",
+    "datepicker",
+    "aviasales"
+  ],
+  "author": "Nikita Bulatov <bulatov.n.o@gmail.com>",
+  "license": "MIT"
+}
