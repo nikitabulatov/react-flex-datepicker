@@ -4,6 +4,7 @@ Datepicker = require('./datepicker')
 
 element = document.createElement('div')
 document.body.appendChild(element)
+element.style.width = '300px'
 
 {div, input} = React.DOM
 ReactDOM.unmountComponentAtNode(element)

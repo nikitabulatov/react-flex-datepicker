@@ -14,6 +14,7 @@ module.exports = React.createFactory(React.createClass(
 
     div(
       className: "#{@props.cssClass}__header"
+      # TODO: Teach disable
       button(
         onClick: @handleButtonClick.bind(this, -1)
         className: "#{@props.cssClass}__arrow --left"
@@ -37,5 +38,6 @@ module.exports = React.createFactory(React.createClass(
   handleButtonClick: (month) ->
     date = new Date(@props.date)
     date.setMonth(date.getMonth() + month)
-    @props.onChange(date) if @props.minDate <= date <= @props.maxDate
+    if (@props.minDate <= date <= @props.maxDate) or not @props.minDate or not @props.maxDate
+      @props.onChange(date)
 ))

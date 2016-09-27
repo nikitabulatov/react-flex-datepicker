@@ -4,10 +4,54 @@
     flex-flow: row wrap;
   }
 
+  &__month-header {
+    padding: 10px 0;
+    text-align: center;
+    display: flex;
+    border: 1px solid lightgrey;
+    border-bottom: 0;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid lightgrey;
+    border-bottom: 0;
+  }
+
+  &__arrow {
+    padding: 10px;
+  }
+
+  &__weekday {
+    flex-basis: (100% / 7);
+  }
+
+  &__days {
+    border: 1px solid lightgrey;
+    border-top: 0;
+  }
+
   &__day {
     background-color: azure;
-    flex-basis: 14%;
-    padding: 30px 0;
+    flex-basis: (100% / 7);
+    padding: 10px 0;
     text-align: center;
+    cursor: pointer;
+
+    &:hover {
+      background-color: lightgrey;
+    }
+
+    &.--selected {
+      background-color: #81d888;
+    }
+
+    &.--is-empty {
+      cursor: default;
+      color: lightgrey;
+      background-color: #fff;
+    }
   }
 }

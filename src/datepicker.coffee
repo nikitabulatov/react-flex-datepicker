@@ -3,7 +3,7 @@ classNames = require('classnames')
 Header = require('./header')
 MonthHeader = require('./month_header')
 Days = require('./days')
-{dateInMonth} = require('./utils')
+{isEqualDates} = require('./utils')
 
 NOOP = ->
 
@@ -23,16 +23,12 @@ module.exports = React.createFactory(React.createClass(
     selected: React.PropTypes.arrayOf(React.PropTypes.instanceOf(Date))
 
   getDefaultProps: ->
-    maxDate = new Date()
-    maxDate.setFullYear(maxDate.getFullYear() + 1)
     cssClass: 'avs-datepicker'
     onDraw: NOOP
     onSelect: NOOP
     dayChildrenFunc: (date) ->
       date.getDate()
     dayCssClassFunc: NOOP
-    minDate: new Date()
-    maxDate: maxDate
     startDate: new Date()
     range: 'from'
     selected: []
@@ -47,12 +43,10 @@ module.exports = React.createFactory(React.createClass(
     currentMonth: @props.startDate
     selected: @props.selected
 
-  componentDidUpdate: ->
-    console.log "redraw #{@state.currentMonth}"
-    @props.onDraw(@state.currentMonth)
+  componentWillUpdate: (_prevProps, prevState) ->
+    @props.onDraw(@state.currentMonth) unless isEqualDates(@state.currentMonth, prevState.currentMonth)
 
   componentDidMount: ->
-    console.log "redraw #{@state.currentMonth}"
     @props.onDraw(@state.currentMonth)
 
   render: ->
@@ -82,7 +76,7 @@ module.exports = React.createFactory(React.createClass(
   handleMonthChange: (date = new Date()) ->
     @setState(currentMonth: date)
 
-  handleDayClick: (date = new Date()) ->
+  handleDayClick: (date) ->
     selected = for i in [0..1]
       index = if @props.range == 'from' then 0 else 1
       if i == index
@@ -91,5 +85,4 @@ module.exports = React.createFactory(React.createClass(
         @state.selected[i]
     @setState(selected: selected)
     @props.onSelect(date)
-
 ))

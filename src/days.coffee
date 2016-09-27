@@ -1,6 +1,6 @@
 React = require('react')
 classNames = require('classnames')
-{getFirstMonthDate, addDays, isEqualDates} = require('./utils')
+{addDays, isEqualDates, isEqualMonths, getMonthDates} = require('./utils')
 
 module.exports = React.createFactory(React.createClass(
   propTypes:
@@ -13,19 +13,16 @@ module.exports = React.createFactory(React.createClass(
 
   render: ->
     {div, span} = React.DOM
-    firstDate = getFirstMonthDate(@props.currentMonth)
-    firstDay = firstDate.getDay()
-    rows = if firstDay > 5 then 6 else 5
+    dates = getMonthDates(@props.currentMonth)
+    dates = @_getPreviousDates(dates[0]).concat(dates, @_getNextDates(dates[dates.length-1]))
     div(
       className: "#{@props.cssClass}__days"
-      for i in [0..7*rows-1]
-        isPreviousMonth = i+1 < firstDay
-        add = if isPreviousMonth then -(firstDay-i) else i - firstDay
-        date = addDays(firstDate, add)
-        isNextMonth = firstDate.getMonth() < date.getMonth()
+      for date, i in dates
+        isPreviousMonth = not isEqualMonths(@props.currentMonth, date) and @props.currentMonth > date
+        isNextMonth = not isEqualMonths(@props.currentMonth, date) and @props.currentMonth < date
         span(
           className: @_getClassNames(date, isPreviousMonth, isNextMonth)
-          onClick: @props.onClick.bind(null, date)
+          onClick: @handleClick.bind(this, date, isPreviousMonth, isNextMonth)
           key: i
           @props.childrenFunc(date)
         )
@@ -49,16 +46,32 @@ module.exports = React.createFactory(React.createClass(
       return ''
 
   _getClassNames: (date, isPreviousMonth, isNextMonth) ->
-    cssModifier = if isPreviousMonth or isNextMonth
-      '--disabled'
+    cssModifier = ''
+    if isPreviousMonth or isNextMonth
+      cssModifier += ' --is-empty'
     else if @_isSelected(date)
-      '--selected'
-    else
-      ''
+      cssModifier += ' --selected'
     classNames(
       "#{@props.cssClass}__day"
       cssModifier
       @_getRangeClass(date)
       @props.cssClassFunc(date)
     )
+
+  _getPreviousDates: (first) ->
+    date = new Date(first)
+    days = if date.getDay() then date.getDay()-1 else 6
+    return [] unless days
+    dates = for i in [1..days]
+      addDays(date, -i)
+    dates.reverse()
+
+  _getNextDates: (last) ->
+    date = new Date(last)
+    return [] unless last.getDay()
+    days = 6 - date.getDay()
+    addDays(date, i) for i in [1..days+1]
+
+  handleClick: (date, isPreviousMonth, isNextMonth) ->
+    @props.onClick(date) if not isPreviousMonth and not isNextMonth
 ))

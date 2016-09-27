@@ -5,6 +5,7 @@ CopyWebpackPlugin = require('copy-webpack-plugin')
 prod = if 'production' == process.env.NODE_ENV then true else false
 
 path = if prod then 'dist/' else 'build/'
+entry = if prod then 'datepicker' else 'index'
 min = if prod then '.min' else ''
 
 plugins = [new ExtractTextPlugin("css/datepicker#{min}.css")]
@@ -19,7 +20,7 @@ else
 module.exports = {
   devtool: if prod then '' else 'eval-cheap-module-source-map'
   entry:
-    main: ['./src/index.coffee', './src/scss/main.scss']
+    main: ["./src/#{entry}.coffee", './src/scss/main.scss']
   resolve:
     root: ['src']
     extensions: ['', '.js', '.coffee']
