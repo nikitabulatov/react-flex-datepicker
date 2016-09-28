@@ -32,6 +32,7 @@ module.exports = React.createFactory(React.createClass(
     startDate: new Date()
     range: 'from'
     selected: []
+    firstDate: 0
     i18n:
       previousMonth: 'Previous month'
       nextMonth: 'Next month'
