@@ -10,6 +10,7 @@ module.exports = React.createFactory(React.createClass(
     currentMonth: React.PropTypes.instanceOf(Date)
     selected: React.PropTypes.arrayOf(React.PropTypes.instanceOf(Date))
     onClick: React.PropTypes.func
+    firstDate: React.PropTypes.number
 
   render: ->
     {div, span} = React.DOM
@@ -51,16 +52,24 @@ module.exports = React.createFactory(React.createClass(
     "#{@props.cssClass}__day #{cssModifier} #{@_getRangeClass(date)} #{@props.cssClassFunc(date)}"
 
   _getPreviousDates: (first) ->
-    days = if first.getDay() then first.getDay()-1 else 6
-    return [] unless days
+    if @props.firstDate
+      days = if first.getDay() then first.getDay()-1 else 6
+      return [] unless days
+    else
+      return [] unless first.getDay()
+      days = if first.getDay() then first.getDay() else 6
     dates = for i in [1..days]
       addDays(first, -i)
     dates.reverse()
 
   _getNextDates: (last) ->
-    return [] unless last.getDay()
     days = 6 - last.getDay()
-    addDays(last, i) for i in [1..days+1]
+    if @props.firstDate
+      return [] unless last.getDay()
+      addDays(last, i) for i in [1..days+1]
+    else
+      return [] if last.getDay() == 6
+      addDays(last, i) for i in [1..days]
 
   handleClick: (date, isPreviousMonth, isNextMonth) ->
     return if isPreviousMonth or isNextMonth

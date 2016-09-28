@@ -20,6 +20,7 @@ module.exports = React.createFactory(React.createClass(
     startDate: React.PropTypes.instanceOf(Date)
     range: React.PropTypes.oneOf(['from', 'to'])
     selected: React.PropTypes.arrayOf(React.PropTypes.instanceOf(Date))
+    firstDate: React.PropTypes.oneOf([0, 1])
 
   getDefaultProps: ->
     cssClass: 'avs-datepicker'
@@ -36,7 +37,7 @@ module.exports = React.createFactory(React.createClass(
       nextMonth: 'Next month'
       months: 'January February March April May June July August September October November December'.split(' ')
       weekdays: 'Sunday Monday Tuesday Wednesday Thursday Friday Saturday'.split(' ')
-      weekdaysShort: 'Mon Tue Wed Thu Fri Sat Sun'.split(' ')
+      weekdaysShort: 'Sun Mon Tue Wed Thu Fri Sat'.split(' ')
 
   getInitialState: ->
     currentMonth: @props.startDate
@@ -60,7 +61,11 @@ module.exports = React.createFactory(React.createClass(
         minDate: @props.minDate
         maxDate: @props.maxDate
       )
-      MonthHeader(labels: @props.i18n.weekdaysShort, cssClass: @props.cssClass)
+      MonthHeader(
+        labels: @props.i18n.weekdaysShort
+        cssClass: @props.cssClass
+        firstDate: @props.firstDate
+      )
       Days(
         childrenFunc: @props.dayChildrenFunc
         cssClassFunc: @props.dayCssClassFunc
@@ -69,6 +74,7 @@ module.exports = React.createFactory(React.createClass(
         cssClass: @props.cssClass
         currentMonth: @state.currentMonth
         range: @props.range
+        firstDate: @props.firstDate
       )
       @props.children
     )

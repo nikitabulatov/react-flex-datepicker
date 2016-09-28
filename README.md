@@ -59,3 +59,6 @@ type: **`String`** one of: ['from', 'to']
 
 ### selected
 type: **`Array`** of `Date`
+
+### firstDay
+type: **`Number`** first day of the week. only one of (0: Sunday, 1: Monday)
