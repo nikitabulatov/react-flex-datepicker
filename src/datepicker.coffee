@@ -36,7 +36,7 @@ module.exports = React.createFactory(React.createClass(
       nextMonth: 'Next month'
       months: 'January February March April May June July August September October November December'.split(' ')
       weekdays: 'Sunday Monday Tuesday Wednesday Thursday Friday Saturday'.split(' ')
-      weekdaysShort: 'Sun Mon Tue Wed Thu Fri Sat'.split(' ')
+      weekdaysShort: 'Mon Tue Wed Thu Fri Sat Sun'.split(' ')
 
   getInitialState: ->
     currentMonth: @props.startDate
