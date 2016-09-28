@@ -1,9 +1,9 @@
 React = require('react')
-classNames = require('classnames')
-{addDays, isEqualDates, isEqualMonths, getMonthDates} = require('./utils')
+{addDays, isEqualDates, isEqualMonths, getMonthDates, daysDiff} = require('./utils')
 
 module.exports = React.createFactory(React.createClass(
   propTypes:
+    range: React.PropTypes.oneOf(['from', 'to'])
     cssClass: React.PropTypes.string
     cssClassFunc: React.PropTypes.func
     childrenFunc: React.PropTypes.func
@@ -36,14 +36,11 @@ module.exports = React.createFactory(React.createClass(
   _getRangeClass: (date) ->
     [from, to] = @props.selected
     return '' if not to or not from
-    if isEqualDates(from, date)
-      return '--is-range-start'
-    else if isEqualDates(to, date)
-      return '--is-range-end'
-    else if from < date < to
-      return '--is-in-range'
-    else
-      return ''
+    return '--is-in-range' if from < date < to
+    range = ''
+    range += '--is-range-start' if isEqualDates(from, date)
+    range += ' --is-range-end' if isEqualDates(to, date)
+    range
 
   _getClassNames: (date, isPreviousMonth, isNextMonth) ->
     cssModifier = ''
@@ -51,12 +48,7 @@ module.exports = React.createFactory(React.createClass(
       cssModifier += ' --is-empty'
     else if @_isSelected(date)
       cssModifier += ' --selected'
-    classNames(
-      "#{@props.cssClass}__day"
-      cssModifier
-      @_getRangeClass(date)
-      @props.cssClassFunc(date)
-    )
+    "#{@props.cssClass}__day #{cssModifier} #{@_getRangeClass(date)} #{@props.cssClassFunc(date)}"
 
   _getPreviousDates: (first) ->
     date = new Date(first)
@@ -73,5 +65,18 @@ module.exports = React.createFactory(React.createClass(
     addDays(date, i) for i in [1..days+1]
 
   handleClick: (date, isPreviousMonth, isNextMonth) ->
-    @props.onClick(date) if not isPreviousMonth and not isNextMonth
+    return if isPreviousMonth or isNextMonth
+    selected = [from, to] = @props.selected
+    if @props.range is 'from'
+      selected[0] = date
+      console.log daysDiff(date, to)
+      selected[1] = date if daysDiff(date, to) > 0
+    else if @props.range is 'to'
+      selected[1] = date
+      console.log daysDiff(date, from)
+      selected[0] = date if daysDiff(date, from) < 0
+    else
+      selected[0] = date
+
+    @props.onClick(date, selected)
 ))

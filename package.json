@@ -1,6 +1,6 @@
 {
   "name": "react-flex-datepicker",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Flexible React DatePicker",
   "homepage": "https://github.com/nikitabulatov/react-flex-datepicker",
   "author": "nikitabulatov <bulatov.n.o@gmail.com>",
@@ -22,9 +22,6 @@
     "dist",
     "*.md"
   ],
-  "dependencies": {
-    "classnames": "^2.2.5"
-  },
   "peerDependencies": {
     "react": "^15.3.2"
   },

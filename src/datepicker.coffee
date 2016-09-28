@@ -1,5 +1,4 @@
 React = require('react')
-classNames = require('classnames')
 Header = require('./header')
 MonthHeader = require('./month_header')
 Days = require('./days')
@@ -33,11 +32,11 @@ module.exports = React.createFactory(React.createClass(
     range: 'from'
     selected: []
     i18n:
-      previousMonth: 'Предыдущий месяц'
-      nextMonth: 'Следующий месяц'
-      months: 'Январь Февраль Март Апрель Май Июнь Июль Август Сентябрь Октябрь Ноябрь Декабрь'.split(' ')
-      weekdays: 'Воскресенье Понедельник Вторник Среда Четверг Пятница Суббота'.split(' ')
-      weekdaysShort: 'пн вт ср чт пт сб вс'.split(' ')
+      previousMonth: 'Previous month'
+      nextMonth: 'Next month'
+      months: 'January February March April May June July August September October November December'.split(' ')
+      weekdays: 'Sunday Monday Tuesday Wednesday Thursday Friday Saturday'.split(' ')
+      weekdaysShort: 'Sun Mon Tue Wed Thu Fri Sat'.split(' ')
 
   getInitialState: ->
     currentMonth: @props.startDate
@@ -52,7 +51,7 @@ module.exports = React.createFactory(React.createClass(
   render: ->
     {div} = React.DOM
     div(
-      className: classNames(@props.cssClass, @props.cssModifier)
+      className: "#{@props.cssClass} #{@props.cssModifier}"
       Header(
         months: @props.i18n.months
         date: @state.currentMonth
@@ -69,20 +68,15 @@ module.exports = React.createFactory(React.createClass(
         selected: @state.selected
         cssClass: @props.cssClass
         currentMonth: @state.currentMonth
+        range: @props.range
       )
       @props.children
     )
 
-  handleMonthChange: (date = new Date()) ->
+  handleMonthChange: (date) ->
     @setState(currentMonth: date)
 
-  handleDayClick: (date) ->
-    selected = for i in [0..1]
-      index = if @props.range == 'from' then 0 else 1
-      if i == index
-        date
-      else
-        @state.selected[i]
+  handleDayClick: (date, selected) ->
     @setState(selected: selected)
-    @props.onSelect(date)
+    @props.onSelect(date, selected)
 ))

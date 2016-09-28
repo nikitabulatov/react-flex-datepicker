@@ -11,7 +11,13 @@ ReactDOM.unmountComponentAtNode(element)
 ReactDOM.render(
   div(
     null
-    input(type: 'text')
-    Datepicker()
+    Datepicker(
+      range: 'from'
+      selected: [new Date(), new Date()]
+    )
+    Datepicker(
+      range: 'to'
+      selected: [new Date(), new Date()]
+    )
   )
 , element)

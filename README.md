@@ -3,20 +3,17 @@
 ## Example
 ```javascript
 var React = require('react');
-var DatePicker = require('react-flex-datepicker');
-require('react-flex-datepicker/dist/datepicker.css');
+var ReactDOM = require('react-dom');
+var Datepicker = require('react-flex-datepicker');
+require('react-flex-datepicker/dist/css/datepicker.min.css');
 
-element = document.createElement('div')
-document.body.appendChild(element)
+var element = document.createElement('div');
+document.body.appendChild(element);
 
-ReactDOM.unmountComponentAtNode(element)
-ReactDOM.render(
-  DatePicker({
-    onSelect: function(date) {
-      // ..
-    }
-  })
-, element)
+element.style.width = '300px';
+ReactDOM.unmountComponentAtNode(element);
+
+ReactDOM.render(Datepicker(/* .. */), element);
 ```
 
 ## Props
@@ -34,6 +31,11 @@ type: **`Function`** arguments: `Date` rendering date
 
 ### onDraw
 type: **`Function`** arguments: `Date` rendering month date
+
+### onSelect
+type: **`Function`** arguments:
+`Date` rendering month date
+`Array` new selected array
 
 ### i18n
 type: **`Object`** keys: {previousMonth, nextMonth, months, weekdays, weekdaysShort}

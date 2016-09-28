@@ -32,11 +32,15 @@ getMonthDates = (date = new Date()) ->
   date.setDate(1)
   addDays(date, i) for i in [0..lastMonthDate(date).getDate()-1]
 
+daysDiff = (date1, date2) ->
+  Math.ceil((date1 - date2) / (1000 * 3600 * 24))
+
 module.exports = {
   addDays,
   addMonths,
   isEqualDates,
   isEqualMonths,
   lastMonthDate,
-  getMonthDates
+  getMonthDates,
+  daysDiff
 }
