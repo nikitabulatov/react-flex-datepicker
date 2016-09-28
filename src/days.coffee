@@ -69,11 +69,9 @@ module.exports = React.createFactory(React.createClass(
     selected = [from, to] = @props.selected
     if @props.range is 'from'
       selected[0] = date
-      console.log daysDiff(date, to)
       selected[1] = date if daysDiff(date, to) > 0
     else if @props.range is 'to'
       selected[1] = date
-      console.log daysDiff(date, from)
       selected[0] = date if daysDiff(date, from) < 0
     else
       selected[0] = date

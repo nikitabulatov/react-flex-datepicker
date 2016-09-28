@@ -1,5 +1,10 @@
 # Flexible React DatePicker
 
+## Installation
+```bash
+  npm install react-flex-datepicker --save
+```
+
 ## Example
 ```javascript
 var React = require('react');

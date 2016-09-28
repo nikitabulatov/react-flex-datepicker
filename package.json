@@ -16,7 +16,7 @@
   },
   "scripts": {
     "start": "node_modules/.bin/webpack-dev-server --progress --colors --config webpack.config.coffee",
-    "prepublish": "node_modules/.bin/webpack --config webpack.prod.config.coffee"
+    "build": "node_modules/.bin/webpack --config webpack.prod.config.coffee"
   },
   "files": [
     "dist",
