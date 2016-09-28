@@ -2,32 +2,18 @@ webpack = require('webpack')
 ExtractTextPlugin = require('extract-text-webpack-plugin')
 CopyWebpackPlugin = require('copy-webpack-plugin')
 
-prod = if 'production' == process.env.NODE_ENV then true else false
-
-path = if prod then 'dist/' else 'build/'
-entry = if prod then 'datepicker' else 'index'
-min = if prod then '.min' else ''
-
-plugins = [new ExtractTextPlugin("css/datepicker#{min}.css")]
-if prod
-  plugins = plugins.concat([
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.UglifyJsPlugin(minimize: true,  compress: warnings: false)
-  ])
-else
-  plugins = plugins.concat([new CopyWebpackPlugin([context: 'src/', from: '*.html'])])
-
 module.exports = {
-  devtool: if prod then '' else 'eval-cheap-module-source-map'
+  devtool: 'eval-cheap-module-source-map'
   entry:
-    main: ["./src/#{entry}.coffee", './src/scss/main.scss']
+    main: ['./src/index.coffee', './src/scss/main.scss']
   resolve:
     root: ['src']
     extensions: ['', '.js', '.coffee']
   output:
-    path: path,
-    filename: "datepicker#{min}.js",
-    publicPath: '/'
+    path: 'build/'
+    filename: "datepicker.js"
+    library: 'DatePicker'
+    libraryTarget: 'umd'
   module:
     loaders: [
       { test: /\.coffee$/, loader: 'coffee-loader' }
@@ -42,5 +28,8 @@ module.exports = {
         )
       }
     ]
-  plugins
+  plugins: [
+    new ExtractTextPlugin("css/datepicker.css"),
+    new CopyWebpackPlugin([context: 'src/', from: '*.html'])
+  ]
 }

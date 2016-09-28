@@ -1,6 +1,6 @@
 {
   "name": "react-flex-datepicker",
-  "version": "0.0.2",
+  "version": "0.0.6",
   "description": "Flexible React DatePicker",
   "homepage": "https://github.com/nikitabulatov/react-flex-datepicker",
   "author": "nikitabulatov <bulatov.n.o@gmail.com>",
@@ -15,20 +15,18 @@
     "url": "https://github.com/nikitabulatov/react-flex-datepicker/issues"
   },
   "scripts": {
-    "start": "node_modules/.bin/webpack-dev-server --progress --colors",
-    "build": "NODE_ENV=production node_modules/.bin/webpack -p"
+    "start": "node_modules/.bin/webpack-dev-server --progress --colors --config webpack.config.coffee",
+    "prepublish": "node_modules/.bin/webpack --config webpack.prod.config.coffee"
   },
   "files": [
     "dist",
-    "*.md",
-    "src"
+    "*.md"
   ],
   "dependencies": {
     "classnames": "^2.2.5"
   },
   "peerDependencies": {
-    "react": "^15.3.2",
-    "react-dom": "^15.3.2"
+    "react": "^15.3.2"
   },
   "devDependencies": {
     "coffee-loader": "^0.7.2",
