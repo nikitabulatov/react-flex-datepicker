@@ -1,13 +1,17 @@
 React = require('react')
-{addDays, isEqualDates, isEqualMonths, getMonthDates, daysDiff} = require('./utils')
+{isDateInRange, addDays, isEqualDates, isEqualMonths, getMonthDates, diff} = require('finity-js')
 
 module.exports = React.createFactory(React.createClass(
+  displayName: 'DatePickerDays'
+
   propTypes:
     range: React.PropTypes.oneOf(['from', 'to'])
     cssClass: React.PropTypes.string
     cssClassFunc: React.PropTypes.func
     childrenFunc: React.PropTypes.func
     currentMonth: React.PropTypes.instanceOf(Date)
+    minDate: React.PropTypes.instanceOf(Date)
+    maxDate: React.PropTypes.instanceOf(Date)
     selected: React.PropTypes.arrayOf(React.PropTypes.instanceOf(Date))
     onClick: React.PropTypes.func
     firstDate: React.PropTypes.number
@@ -37,19 +41,28 @@ module.exports = React.createFactory(React.createClass(
   _getRangeClass: (date) ->
     [from, to] = @props.selected
     return '' if not to or not from
-    return '--is-in-range' if from < date < to
+    return '--in-range' if from < date < to
     range = ''
-    range += '--is-range-start' if isEqualDates(from, date)
-    range += ' --is-range-end' if isEqualDates(to, date)
+    range += '--range-start' if isEqualDates(from, date)
+    # FIXME: --range-end date to always equal last date in range :(
+    range += ' --range-end' if isEqualDates(to, date)
     range
 
-  _getClassNames: (date, isPreviousMonth, isNextMonth) ->
+  _getClassModifier: (date, isPreviousMonth, isNextMonth) ->
+    {minDate, maxDate} = @props
     cssModifier = ''
-    if isPreviousMonth or isNextMonth
-      cssModifier += ' --is-empty'
-    else if @_isSelected(date)
-      cssModifier += ' --selected'
-    "#{@props.cssClass}__day #{cssModifier} #{@_getRangeClass(date)} #{@props.cssClassFunc(date)}"
+    cssModifier += ' --disabled' if isPreviousMonth or isNextMonth or not isDateInRange(date, minDate, maxDate)
+    cssModifier += ' --selected' if @_isSelected(date)
+    cssModifier
+
+  _getClassNames: (date, isPreviousMonth, isNextMonth) ->
+    cssModifier = @_getClassModifier(date, isPreviousMonth, isNextMonth)
+    rangeClass = @_getRangeClass(date)
+    cssClass = "#{@props.cssClass}__day"
+    cssClass += " #{cssModifier}" if cssModifier
+    cssClass += " #{rangeClass}" if rangeClass
+    cssClass += " #{@props.cssClassFunc(date) || ''}"
+    cssClass
 
   _getPreviousDates: (first) ->
     if @props.firstDate
@@ -72,16 +85,6 @@ module.exports = React.createFactory(React.createClass(
       addDays(last, i) for i in [1..days]
 
   handleClick: (date, isPreviousMonth, isNextMonth) ->
-    return if isPreviousMonth or isNextMonth
-    selected = [from, to] = @props.selected
-    if @props.range is 'from'
-      selected[0] = date
-      selected[1] = date if daysDiff(date, to) > 0
-    else if @props.range is 'to'
-      selected[1] = date
-      selected[0] = date if daysDiff(date, from) < 0
-    else
-      selected[0] = date
-
-    @props.onClick(date, selected)
+    return if isPreviousMonth or isNextMonth or not isDateInRange(date, @props.minDate, @props.maxDate)
+    @props.onClick(date)
 ))

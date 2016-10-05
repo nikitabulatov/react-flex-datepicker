@@ -1,6 +1,9 @@
 React = require('react')
+{addMonths, isDateInRange} = require('finity-js')
 
 module.exports = React.createFactory(React.createClass(
+  displayName: 'DatePickerHeader'
+
   propTypes:
     cssClass: React.PropTypes.string
     onChange: React.PropTypes.func
@@ -36,8 +39,7 @@ module.exports = React.createFactory(React.createClass(
     "#{@props.months[month]} #{year}"
 
   handleButtonClick: (month) ->
-    date = new Date(@props.date)
-    date.setMonth(date.getMonth() + month)
-    if (@props.minDate <= date <= @props.maxDate) or not @props.minDate or not @props.maxDate
-      @props.onChange(date)
+    date = addMonths(@props.date, month)
+    date.setDate(@props.minDate.getDate())
+    @props.onChange(date) if isDateInRange(date, @props.minDate, @props.maxDate)
 ))

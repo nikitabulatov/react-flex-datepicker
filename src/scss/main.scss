@@ -40,15 +40,19 @@
     text-align: center;
     cursor: pointer;
 
-    &:hover {
-      background-color: lightgrey;
+    &.--in-range {
+      background-color: beige;
     }
 
     &.--selected {
       background-color: #81d888;
     }
 
-    &.--is-empty {
+    &:hover {
+      background-color: lightgrey;
+    }
+
+    &.--disabled {
       cursor: default;
       color: lightgrey;
       background-color: #fff;
