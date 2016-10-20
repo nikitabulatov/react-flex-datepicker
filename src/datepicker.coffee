@@ -3,7 +3,7 @@ Header = require('./header')
 MonthHeader = require('./month_header')
 Days = require('./days')
 Input = require('./input')
-{isEqualDates, diff} = require('finity-js')
+{isEqual, diff} = require('finity-js')
 
 NOOP = ->
 
@@ -63,7 +63,7 @@ module.exports = React.createFactory(React.createClass(
     selected: @props.selected
 
   componentWillUpdate: (_prevProps, prevState) ->
-    @props.onDraw(@state.currentMonth) unless isEqualDates(@state.currentMonth, prevState.currentMonth)
+    @props.onDraw(@state.currentMonth) unless isEqual(@state.currentMonth, prevState.currentMonth, 'day')
 
   componentDidMount: ->
     @props.onDraw(@state.currentMonth)

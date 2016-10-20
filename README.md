@@ -25,6 +25,10 @@ ReactDOM.render(Datepicker(/* .. */), element);
 #### cssClass
 type: **`String`**
 
+#### dateFormat
+type: **`String`** — use is for formatting dates      
+[more about date formats](https://github.com/nikitabulatov/finity-js#patterns-for-formatting-and-parsing-date)
+
 #### cssModifier
 type: **`String`**
 

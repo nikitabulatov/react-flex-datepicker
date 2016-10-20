@@ -1,6 +1,6 @@
 {
   "name": "react-flex-datepicker",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Flexible React DatePicker",
   "homepage": "https://github.com/nikitabulatov/react-flex-datepicker",
   "author": "nikitabulatov <bulatov.n.o@gmail.com>",
@@ -46,6 +46,6 @@
     "aviasales"
   ],
   "dependencies": {
-    "finity-js": "^0.1.7"
+    "finity-js": "^1.0.0"
   }
 }

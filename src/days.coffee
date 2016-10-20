@@ -1,5 +1,5 @@
 React = require('react')
-{isDateInRange, addDays, isEqualDates, isEqualMonths, getMonthDates, diff} = require('finity-js')
+{isDateInRange, addDays, isEqual, getMonthDates} = require('finity-js')
 
 module.exports = React.createFactory(React.createClass(
   displayName: 'DatePickerDays'
@@ -23,8 +23,8 @@ module.exports = React.createFactory(React.createClass(
     div(
       className: "#{@props.cssClass}__days"
       for date, i in dates
-        isPreviousMonth = not isEqualMonths(@props.currentMonth, date) and @props.currentMonth > date
-        isNextMonth = not isEqualMonths(@props.currentMonth, date) and @props.currentMonth < date
+        isPreviousMonth = not isEqual(@props.currentMonth, date, 'month') and @props.currentMonth > date
+        isNextMonth = not isEqual(@props.currentMonth, date, 'month') and @props.currentMonth < date
         span(
           className: @_getClassNames(date, isPreviousMonth, isNextMonth)
           onClick: @handleClick.bind(this, date, isPreviousMonth, isNextMonth)
@@ -34,7 +34,7 @@ module.exports = React.createFactory(React.createClass(
     )
 
   _isSelected: (date) ->
-    for selected in @props.selected when isEqualDates(selected, date)
+    for selected in @props.selected when isEqual(selected, date, 'day')
       return true
     false
 
@@ -43,9 +43,9 @@ module.exports = React.createFactory(React.createClass(
     return '' if not to or not from
     return '--in-range' if from < date < to
     range = ''
-    range += '--range-start' if isEqualDates(from, date)
+    range += '--range-start' if isEqual(from, date, 'day')
     # FIXME: --range-end date to always equal last date in range :(
-    range += ' --range-end' if isEqualDates(to, date)
+    range += ' --range-end' if isEqual(to, date, 'day')
     range
 
   _getClassModifier: (date, isPreviousMonth, isNextMonth) ->
